@@ -1,0 +1,46 @@
+body {
+    font-family: 'PT Sans Narrow', sans-serif;
+    background: url("images/Background-Of-Baby-Pictures2.jpg");
+}
+
+#header {
+    font-size: 35px;
+    text-align: center;
+    background: #336699;
+}
+
+#logo {
+    color: #fff;
+}
+
+.jumbotron {
+    text-align: center;
+    border-bottom: 2px solid #336699;
+}
+
+
+#buttons {
+
+    margin: 50px 0;
+    text-align: center;
+
+}
+
+button {
+    width: 200px;
+    height: 100px;
+    background: #538cc6;
+    color: #fff;
+}
+
+#rightSection {
+	position: relative;
+	top: 50px;
+	left:10%;
+}
+
+#leftSection {
+	position: relative;
+	top: 50px;
+
+    .button
