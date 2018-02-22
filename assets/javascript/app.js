@@ -1,32 +1,37 @@
 var theTeasers = {
     "slide": {
-        question: ["Picture a glass of cold refreshing water with ice cubes. The glass is filled to its brim. What will happen when the ice melts?", "fdgdggr"],
-        options1: ["up"],
-        options2: ["same", "dfwwfess"],
-        options3: ["down"],
-        picture: ["assets/images/glassOfWater.jpg", "assets/images/snail.jpg", "assets/images/coin.jpg", "assets/images/lakeView.jpg"],
-        expl: ["Try it! The water level will be unchanged"]
+        question: ["Picture a glass of cold refreshing water with ice cubes. The glass is filled to its brim. What will happen when the ice melts?",
+                    "A snail is in a 20 feet deep well. Every day the snail climbs 5 feet upward and slides down 4 feet every night. After how many days will the snail be out?",
+                    "One coin has two heads. A second coin has two tails. A third coin has a side of a head and a side of a tail. One of those coins was flipped to reveal a head. What is the likelihood that the other side is a tail?",
+                    "A lily pad doubles in size every day. The pond is covert with them by the 16th day. When was the lake half covered?",
+                    "A bell in a clock tower will take 5 seconds to ring 6 times. How many seconds it will take it to ring 12 times?"],
+        options1: ["The water will overflow", "15-16 days", "15% - 25%", "2-5 days", "9 seconds"],
+        options2: ["The water level will stay the same", "17-18 days", "30% - 40%", "7-10 days", "10 seconds"],
+        options3: ["The water level will down", "19-20 days", "45% - 55%", "12-15 days", "11 seconds"],
+        picture: ["assets/images/glassOfWater.jpg", "assets/images/snail.jpg", "assets/images/coin.jpg", "assets/images/lilyPad.jpg", "assets/images/clock.jpg"],
+        expl: ["Try it! The water level will be unchanged.",
+                "After the 15th day the snail will reach the 15th feet mark. on the 16th day the snail will climb 5 more feet and that means he will be out of the well.",
+                "Because only one coin has an opposite to a head of a tail, the chance is one third.",
+                "On the 16th day it is covered because it doubled in size every day, that means that on day 15 it was half full. ",
+                "The seconds represent the time between the rings, therefore, it will take eleven seconds."]
     }
 };
 
-var number = 25;
+var number = 30;
 var intervalId;
-var isRunning = false;
 var timeOver = false;
 var i = 0;
-var correctAnswer = [theTeasers.slide.options2[i]];
+var correctAnswer = [theTeasers.slide.options2[0], theTeasers.slide.options1[1],  theTeasers.slide.options1[2],  theTeasers.slide.options3[3],  theTeasers.slide.options3[4]];
 var gameOver = false;
 var incorrectCount = 0;
 var correctCount = 0;
 
 function reStart() {
     console.log("restart");
-    number = 25;
-    intervalId;
-    isRunning = false;
+    clearInterval(intervalId);
+    number = 30;
     timeOver = false;
     i = 0;
-    correctAnswer = [theTeasers.slide.options2[i]];
     gameOver = false;
     incorrectCount = 0;
     correctCount = 0;
@@ -36,7 +41,7 @@ function reStart() {
 function run() {
     console.log("run");
     clearInterval(intervalId);
-    number = 25;
+    number = 30;
     intervalId = setInterval(decrement, 1000);
 
 
@@ -69,7 +74,7 @@ function stop() {
 function run1() {
     console.log("run1");
     clearInterval(intervalId);
-    number = 1;
+    number = 10;
     intervalId = setInterval(decrement1, 1000);
 
 }
@@ -95,24 +100,26 @@ function stop1() {
     }
 }
 
-    function finish() {
+function finish() {
     console.log("finish");
     $("#jumbotron").empty();
     $("#jumbotron").html("Wasn't it fun");
     $("#jumbotron").append("<br>");
     $("#jumbotron").append("You got " + correctCount + " questions right");
     $("#jumbotron").append("<br>");
-    $("#jumbotron").append("You got " + incorrectCount + " questions right");
+    $("#jumbotron").append("You got " + incorrectCount + " questions wrong");
     $("#jumbotron").css({ "font-size": "30px" });
     $("#rightSection").empty();
-    var newImage = $("<img>");
-    newImage.attr('src', "assets/images/thinkingTrivia.jpg");
-    newImage.css({ "height": "900px" });
-    $("#rightSection").append(newImage);
+    var newImage1 = $("<img>");
+    newImage1.attr('src', "assets/images/thinkingTrivia.jpg");
+    newImage1.css({ "height": "800px" });
+    $("#rightSection").append(newImage1);
+
     $("#buttons").empty();
-    $("#buttons").html("<button>Start</button>");
-    $("#buttons").addClass("start");
-    $(".start").click(reStart);
+    $("#buttons").html("<button><h2>Start</h2></button>");
+    $("button").addClass("start");
+     $(".start").click(reStart);
+
 
 }
 
@@ -155,31 +162,30 @@ function startSlideshow() {
 }
 
 
-    function checkCorrect() {
-        console.log("check");
-        var x = $(this).attr("class");
-        if (x == "start") {
-            $(".start").click(finish);
-            console.log("x is start")
+function checkCorrect() {
+    console.log("check");
+    var x = $(this).attr("class");
+    if (x == "start") {
+        $(".start").click(reStart);
+        console.log("x is start")
+    } else {
+        var answerChosen = $(this).attr("data-value");
+        console.log(answerChosen);
+        console.log(correctAnswer[i]);
+
+
+        if (answerChosen == correctAnswer[i]) {
+            correctCount++;
+            revealIfRi();
         } else {
-            var answerChosen = $(this).attr("data-value");
-            console.log(answerChosen);
-            console.log(correctAnswer[i]);
-
-
-            if ((answerChosen == correctAnswer[i]) && (gameOver == false)) {
-                correctCount++;
-                revealIfRi();
-            } else {
-                revealIfWr();
-                incorrectCount++;
-            }
-            console.log(correctCount);
-            console.log(incorrectCount);
-            run1();
+            revealIfWr();
+            incorrectCount++;
         }
+        console.log(correctCount);
+        console.log(incorrectCount);
+        run1();
     }
-
+}
 
 function revealIfWr() {
     console.log("wrong");
@@ -207,9 +213,6 @@ function revealIfRi() {
 
 $(document).ready(function() {
     console.log("ready");
-    $(".start").click(reStart);
+    $(".start").click(startSlideshow);
     $(document).on("click", "button", checkCorrect);
-
-
-
 });
